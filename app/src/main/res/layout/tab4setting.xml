@@ -1,0 +1,95 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context="com.tananut.travelmateapp.MainActivity$PlaceholderFragment">
+
+
+    <GridLayout
+        android:id="@+id/grid4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="146dp"
+        android:background="@color/white">
+
+        <Button
+            android:id="@+id/logoutButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="27dp"
+            android:background="@color/white"
+            android:drawableLeft="@android:drawable/ic_lock_power_off"
+            android:gravity="left|center_vertical"
+            android:text="         Log Out"
+            android:textColor="#000000"
+            style="?android:attr/borderlessButtonStyle"></Button>
+    </GridLayout>
+
+    <GridLayout
+        android:id="@+id/grid3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="96dp"
+        android:background="@color/white">
+
+        <Button
+            android:id="@+id/securityButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="35dp"
+            android:background="@color/white"
+            android:drawableLeft="@android:drawable/ic_secure"
+            android:gravity="left|center_vertical"
+            android:text="           Security"
+            android:textColor="#000000"
+            style="?android:attr/borderlessButtonStyle"></Button>
+    </GridLayout>
+
+    <GridLayout
+        android:id="@+id/grid1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:background="@color/white">
+
+        <Button
+            android:id="@+id/accountButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="21dp"
+            android:background="@color/white"
+            android:drawableLeft="@drawable/common_google_signin_btn_icon_light_normal"
+            android:gravity="left|center_vertical"
+            android:text="      Account"
+            android:textColor="#000000"
+            style="?android:attr/borderlessButtonStyle"></Button>
+    </GridLayout>
+
+    <GridLayout
+        android:id="@+id/grid2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:layout_below="@+id/grid1"
+        android:layout_alignParentStart="true">
+
+        <Button
+            android:id="@+id/partnersButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:background="@color/white"
+            android:drawableLeft="@android:drawable/ic_menu_myplaces"
+            android:gravity="left|center_vertical"
+            android:text="        Partners"
+            android:textColor="#000000"
+            style="?android:attr/borderlessButtonStyle"></Button>
+    </GridLayout>
+</RelativeLayout>

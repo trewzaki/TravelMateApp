@@ -13,10 +13,17 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 public class Tab4Setting extends Fragment {
+
+    private View rootView;
+    private boolean _chkCreate = false;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.tab4setting, container, false);
+        if (!_chkCreate) {
+            rootView = inflater.inflate(R.layout.tab4setting, container, false);
+            _chkCreate = true;
+        }
         return rootView;
     }
 }

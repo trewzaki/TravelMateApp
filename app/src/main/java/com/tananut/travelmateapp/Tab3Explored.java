@@ -11,10 +11,17 @@ import android.view.View;
 import android.view.ViewGroup;
 
 public class Tab3Explored extends Fragment {
+
+    private View rootView;
+    private boolean _chkCreate = false;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.tab3explored, container, false);
+        if (!_chkCreate) {
+            rootView = inflater.inflate(R.layout.tab3explored, container, false);
+            _chkCreate = true;
+        }
         return rootView;
     }
 }

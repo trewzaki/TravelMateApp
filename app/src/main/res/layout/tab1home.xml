@@ -10,6 +10,7 @@
 
     <Switch
         android:id="@+id/tracking_switch"
+        android:checked="false"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignStart="@+id/travelling_switch"

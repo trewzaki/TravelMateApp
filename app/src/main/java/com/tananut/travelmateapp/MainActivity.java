@@ -1,8 +1,10 @@
 package com.tananut.travelmateapp;
 
+import android.content.Context;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
@@ -18,6 +20,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import android.widget.TextView;
+
+import static com.tananut.travelmateapp.Singleton.Tab1;
+import static com.tananut.travelmateapp.Singleton.Tab2;
+import static com.tananut.travelmateapp.Singleton.Tab3;
+import static com.tananut.travelmateapp.Singleton.Tab4;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -64,7 +71,6 @@ public class MainActivity extends AppCompatActivity {
 //        });
 
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -127,6 +133,7 @@ public class MainActivity extends AppCompatActivity {
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
      * one of the sections/tabs/pages.
      */
+
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
         public SectionsPagerAdapter(FragmentManager fm) {
@@ -137,17 +144,14 @@ public class MainActivity extends AppCompatActivity {
         public Fragment getItem(int position) {
             switch (position) {
                 case 0 :
-                    Tab1Home tab1 = new Tab1Home();
-                    return tab1;
+                    Tab1().setTab2(Tab2());
+                    return Tab1();
                 case 1 :
-                    Tab2Map tab2 = new Tab2Map();
-                    return tab2;
+                    return Tab2();
                 case 2 :
-                    Tab3Explored tab3 = new Tab3Explored();
-                    return tab3;
+                    return Tab3();
                 case 3 :
-                    Tab4Setting tab4 = new Tab4Setting();
-                    return tab4;
+                    return Tab4();
                 default:
                     return null;
             }

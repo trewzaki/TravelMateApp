@@ -1,4 +1,5 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -8,13 +9,62 @@
         xmlns:map="http://schemas.android.com/apk/res-auto"
         android:id="@+id/googleMap"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true" />
+
+    <GridLayout
+        android:id="@+id/button_camera"
+        android:layout_width="120dp"
+        android:layout_height="40dp"
+        android:background="@drawable/square_cutting_edge"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="10dp"
+        android:layout_marginEnd="150dp">
 
 
-    <TextView
-        android:id="@+id/section_label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="30dp"
+            android:layout_height="wrap_content"
+            android:paddingLeft="14dp"
+            android:layout_column="0"
+            android:layout_row="0"
+            app:srcCompat="@drawable/blue_arrow_up_darker" />
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="90dp"
+            android:layout_height="match_parent"
+            android:textSize="13dp"
+            android:paddingRight="10dp"
+            android:gravity="center"
+            android:textColor="#0031fe"
+            android:text="CENTER" />
+
+    </GridLayout>
+
+    <GridLayout
+        android:id="@+id/button_tracking"
+        android:layout_width="120dp"
+        android:layout_height="40dp"
+        android:background="@drawable/square_cutting_edge"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="10dp"
+        android:layout_marginEnd="15dp">
+
+        <TextView
+            android:id="@+id/tracking_text"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textSize="13dp"
+            android:gravity="center"
+            android:textColor="#0031fe"
+            android:text="TRACKING - OFF" />
+
+    </GridLayout>
 
     <!--<com.google.android.gms.maps.MapView-->
         <!--android:id="@+id/mapView"-->

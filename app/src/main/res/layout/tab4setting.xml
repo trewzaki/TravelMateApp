@@ -8,88 +8,131 @@
 
 
     <GridLayout
-        android:id="@+id/grid4"
+        android:id="@+id/button_account"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="55dp"
+        android:layout_marginTop="1dp"
+        android:clickable="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="146dp"
-        android:background="@color/white">
+        android:background="@drawable/selector">
 
-        <Button
-            android:id="@+id/logoutButton"
+
+        <ImageView
+            android:id="@+id/imageView1"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="20dp"
+            android:layout_marginBottom="2dp"
+            app:srcCompat="@drawable/account"
+            />
+
+        <TextView
+            android:id="@+id/textView1"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="27dp"
-            android:background="@color/white"
-            android:drawableLeft="@android:drawable/ic_lock_power_off"
-            android:gravity="left|center_vertical"
-            android:text="         Log Out"
+            android:layout_height="match_parent"
+            android:text="ACCOUNT"
             android:textColor="#000000"
-            style="?android:attr/borderlessButtonStyle"></Button>
+            android:paddingLeft="25dp"
+            android:paddingTop="16dp"
+            android:textSize="16dp" />
+
     </GridLayout>
 
     <GridLayout
-        android:id="@+id/grid3"
+        android:id="@+id/button_parters"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="55dp"
         android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="96dp"
-        android:background="@color/white">
+        android:clickable="true"
+        android:layout_below="@+id/button_account"
+        android:background="@drawable/selector">
 
-        <Button
-            android:id="@+id/securityButton"
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="20dp"
+            android:layout_marginBottom="2dp"
+            app:srcCompat="@drawable/team"
+
+            />
+
+        <TextView
+            android:id="@+id/textView2"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="35dp"
-            android:background="@color/white"
-            android:drawableLeft="@android:drawable/ic_secure"
-            android:gravity="left|center_vertical"
-            android:text="           Security"
+            android:layout_height="match_parent"
+            android:text="PARTNERS"
             android:textColor="#000000"
-            style="?android:attr/borderlessButtonStyle"></Button>
+            android:paddingLeft="25dp"
+            android:paddingTop="16dp"
+            android:textSize="16dp" />
+
     </GridLayout>
 
     <GridLayout
-        android:id="@+id/grid1"
+        android:id="@+id/button_security"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="55dp"
         android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:background="@color/white">
+        android:clickable="true"
+        android:layout_below="@+id/button_parters"
+        android:background="@drawable/selector">
 
-        <Button
-            android:id="@+id/accountButton"
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="20dp"
+            android:layout_marginBottom="2dp"
+            app:srcCompat="@drawable/locked_padlock"
+            />
+
+        <TextView
+            android:id="@+id/textView3"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="21dp"
-            android:background="@color/white"
-            android:drawableLeft="@drawable/common_google_signin_btn_icon_light_normal"
-            android:gravity="left|center_vertical"
-            android:text="      Account"
+            android:layout_height="match_parent"
+            android:text="SECURITY"
             android:textColor="#000000"
-            style="?android:attr/borderlessButtonStyle"></Button>
+            android:paddingLeft="25dp"
+            android:paddingTop="16dp"
+            android:textSize="16dp" />
+
     </GridLayout>
 
     <GridLayout
-        android:id="@+id/grid2"
+        android:id="@+id/button_logout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:layout_below="@+id/grid1"
-        android:layout_alignParentStart="true">
+        android:layout_height="55dp"
+        android:layout_alignParentStart="true"
+        android:clickable="true"
+        android:layout_marginTop="2dp"
+        android:layout_below="@+id/button_security"
+        android:background="@drawable/selector">
 
-        <Button
-            android:id="@+id/partnersButton"
+        <ImageView
+            android:id="@+id/imageView4"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="20dp"
+            android:layout_marginBottom="2dp"
+            app:srcCompat="@drawable/power_symbol"
+            />
+
+        <TextView
+            android:id="@+id/textView4"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="30dp"
-            android:background="@color/white"
-            android:drawableLeft="@android:drawable/ic_menu_myplaces"
-            android:gravity="left|center_vertical"
-            android:text="        Partners"
+            android:layout_height="match_parent"
+            android:text="LOG OUT"
             android:textColor="#000000"
-            style="?android:attr/borderlessButtonStyle"></Button>
+            android:paddingLeft="25dp"
+            android:paddingTop="16dp"
+            android:textSize="16dp" />
+
     </GridLayout>
+
 </RelativeLayout>

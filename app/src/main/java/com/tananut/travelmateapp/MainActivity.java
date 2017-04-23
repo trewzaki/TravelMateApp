@@ -1,12 +1,12 @@
 package com.tananut.travelmateapp;
 
-import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.drawable.Drawable;
+import android.os.StrictMode;
+import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.TabLayout;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -19,8 +19,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import static com.tananut.travelmateapp.Singleton.FirstPage;
+import static com.tananut.travelmateapp.Singleton.Main;
 import static com.tananut.travelmateapp.Singleton.Tab1;
 import static com.tananut.travelmateapp.Singleton.Tab2;
 import static com.tananut.travelmateapp.Singleton.Tab3;
@@ -42,34 +45,50 @@ public class MainActivity extends AppCompatActivity {
      * The {@link ViewPager} that will host the section contents.
      */
     private ViewPager mViewPager;
+    private Drawable myDrawable;
+    private String title;
+    private TabLayout tabLayout;
+
+    private static ConstraintLayout _fadeScreen;
+    private static ProgressBar _progressBar;
+
+    private SharedPreferences mPrefs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        if (android.os.Build.VERSION.SDK_INT > 9) {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+        }
 
-//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-//        setSupportActionBar(toolbar);
-        // Create the adapter that will return a fragment for each of the three
-        // primary sections of the activity.
+        mPrefs = getSharedPreferences("label", 0);
+//        SharedPreferences.Editor mEditor = mPrefs.edit();
+//        mEditor.putString("LoginState", "0").commit();
+        String mString = mPrefs.getString("LoginState", "default_value_if_variable_not_found");
+
+        if (!mString.equals("1"))
+        {
+            Intent startNewActivity = new Intent(MainActivity.this, FirstPageActivity.class);
+            startActivity(startNewActivity);
+        }
+
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
+        tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
+        tabLayout.getTabAt(0).setIcon(R.drawable.home);
+        tabLayout.getTabAt(1).setIcon(R.drawable.map);
+        tabLayout.getTabAt(2).setIcon(R.drawable.flag);
+        tabLayout.getTabAt(3).setIcon(R.drawable.setting);
 
-//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//            }
-//        });
-
+        _fadeScreen = (ConstraintLayout) findViewById(R.id.fadeScreen);
+        _progressBar = (ProgressBar) findViewById(R.id.progressBar);
     }
 
     @Override
@@ -92,6 +111,18 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public static void loadingScreen(boolean _isloading)
+    {
+        if (_isloading) {
+            _progressBar.setVisibility(View.VISIBLE);
+            _fadeScreen.setVisibility(View.VISIBLE);
+        }
+        else {
+            _progressBar.setVisibility(View.INVISIBLE);
+            _fadeScreen.setVisibility(View.INVISIBLE);
+        }
     }
 
     /**
@@ -123,8 +154,8 @@ public class MainActivity extends AppCompatActivity {
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.tab1home, container, false);
-            TextView textView = (TextView) rootView.findViewById(R.id.section_label);
-            textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
+//            TextView textView = (TextView) rootView.findViewById(R.id.section_label);
+//            textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
             return rootView;
         }
     }
@@ -174,8 +205,9 @@ public class MainActivity extends AppCompatActivity {
                     return "Explored";
                 case 3:
                     return "Setting";
+                default:
+                    return null;
             }
-            return null;
         }
     }
 }

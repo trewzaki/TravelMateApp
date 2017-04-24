@@ -72,6 +72,7 @@ public class MainActivity extends AppCompatActivity {
         {
             Intent startNewActivity = new Intent(MainActivity.this, FirstPageActivity.class);
             startActivity(startNewActivity);
+            finish();
         }
 
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
@@ -209,5 +210,9 @@ public class MainActivity extends AppCompatActivity {
                     return null;
             }
         }
+    }
+
+    @Override
+    public void onBackPressed() {
     }
 }

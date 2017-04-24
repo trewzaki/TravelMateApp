@@ -9,6 +9,7 @@ import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.location.Location;
@@ -86,7 +87,7 @@ public class Tab2Map extends Fragment implements LocationListener{
     private LocationManager lm;
     private boolean _isTrack = false;
     private boolean _freeCamMode = false;
-    private boolean _chkCreate = false;
+    public boolean _chkCreate = false;
     private Location _location;
     private View rootView;
     private GridLayout _buttonCamera;
@@ -99,10 +100,12 @@ public class Tab2Map extends Fragment implements LocationListener{
     public String _imageName = "current_";
     public File file;
 
+    private SharedPreferences mPrefs;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        if (!_chkCreate) {
+        if (!Tab2()._chkCreate) {
             rootView = inflater.inflate(R.layout.tab2map, container, false);
             lm = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
             _location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
@@ -182,7 +185,7 @@ public class Tab2Map extends Fragment implements LocationListener{
 
                 }
             });
-            _chkCreate = true;
+            Tab2()._chkCreate = true;
         }
         return rootView;
     }
@@ -288,7 +291,11 @@ public class Tab2Map extends Fragment implements LocationListener{
                 String datetime = "" + currenta.get(Calendar.YEAR) + "-" + month + "-" + date + " " + hour + ":" + minute + ":" + second;
                 _text = (_text.equals(""))? datetime : _text;
 
-                String urlParameters  = "uid=1&ename=" + _text +
+                mPrefs = getActivity().getSharedPreferences("label", 0);
+                String user_id = mPrefs.getString("id", "default_value_if_variable_not_found");
+
+                String urlParameters  = "uid=" + user_id +
+                        "&ename=" + _text +
                         "&des=Click here to edit your description.&time="+ datetime +
                         "&pic_name=" + _imageName +
                         "&latitude=" + Tab2().latitude +
@@ -311,7 +318,7 @@ public class Tab2Map extends Fragment implements LocationListener{
                 ft.detach(Tab2());
                 ft.attach(Tab2());
                 ft.commit();
-                _chkCreate = false;
+                Tab2()._chkCreate = false;
                 _freeCamMode = false;
 
                 Tab3().refresh();

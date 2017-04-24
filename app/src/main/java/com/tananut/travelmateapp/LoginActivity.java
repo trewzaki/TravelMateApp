@@ -39,6 +39,8 @@ public class LoginActivity extends AppCompatActivity {
         _backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent startNewActivity = new Intent(LoginActivity.this, FirstPageActivity.class);
+                startActivity(startNewActivity);
                 finish();
             }
         });
@@ -62,14 +64,20 @@ public class LoginActivity extends AppCompatActivity {
                         boolean success = modelReader.getBoolean("success");
 
                         if (success) {
+                            String user_id    = modelReader.getInt("id") + "";
+                            String first_name = modelReader.getString("first_name") + "";
+
                             Intent startNewActivity = new Intent(LoginActivity.this, MainActivity.class);
-                            startNewActivity.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
-                                    | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+//                            startNewActivity.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
+//                                    | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                             startActivity(startNewActivity);
+                            finish();
 
                             mPrefs = getSharedPreferences("label", 0);
                             SharedPreferences.Editor mEditor = mPrefs.edit();
                             mEditor.putString("LoginState", "1").commit();
+                            mEditor.putString("id", user_id).commit();
+                            mEditor.putString("first_name", first_name).commit();
                         }
                         else {
                             Toast.makeText(LoginActivity.this, "Invalid username or password.", Toast.LENGTH_SHORT).show();

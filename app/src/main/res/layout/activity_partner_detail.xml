@@ -41,6 +41,7 @@
                 android:layout_width="238dp"
                 android:layout_height="28dp"
                 android:layout_column="0"
+                android:layout_marginBottom="3dp"
                 android:layout_gravity="center"
                 android:layout_marginLeft="60dp"
                 android:layout_marginRight="15dp"
@@ -66,20 +67,142 @@
                 android:layout_column="0"
                 android:layout_gravity="left|center"
                 android:layout_marginLeft="10dp"
-                app:srcCompat="@drawable/circle" />
+                app:srcCompat="@color/white" />
 
             <ImageView
                 android:id="@+id/imageView5"
-                android:layout_width="120dp"
-                android:layout_height="120dp"
+                android:layout_width="110dp"
+                android:layout_height="110dp"
                 android:layout_row="0"
                 android:layout_column="0"
                 android:layout_gravity="left|center"
-                android:layout_marginLeft="10dp"
-                android:background="@drawable/googlemap"
-                app:srcCompat="@drawable/circle" />
+                android:layout_marginLeft="15dp"
+                app:srcCompat="@drawable/black_user" />
+
+            <TextView
+                android:id="@+id/first_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_row="0"
+                android:layout_column="0"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="150dp"
+                android:textSize="23dp"
+                android:text="ThatChai" />
+
+            <TextView
+                android:id="@+id/last_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_row="0"
+                android:layout_marginTop="60dp"
+                android:layout_marginLeft="150dp"
+                android:textSize="33dp"
+                android:layout_column="0"
+                android:text="Chuaubon" />
+
+            <ImageView
+                android:id="@+id/edit_name"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_column="0"
+                android:layout_row="0"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_gravity="right"
+                app:srcCompat="@drawable/edit" />
 
         </GridLayout>
+
+        <TextView
+            android:id="@+id/textView7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="15dp"
+            android:layout_row="2"
+            android:layout_column="0"
+            android:textColor="#000000"
+            android:textSize="22dp"
+            android:text="Telephone Number" />
+
+        <GridLayout
+            android:layout_width="230dp"
+            android:layout_height="0.2dp"
+            android:layout_marginLeft="10dp"
+            android:layout_row="3"
+            android:layout_column="0"
+            android:background="#000000">
+
+        </GridLayout>
+
+        <TextView
+            android:id="@+id/phoneNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="20dp"
+            android:layout_row="4"
+            android:layout_column="0"
+            android:textSize="18dp"
+            android:text="082-xxxxxxx" />
+
+        <ImageView
+            android:id="@+id/edit_phoneNumber"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_column="0"
+            android:layout_row="4"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="30dp"
+            android:layout_gravity="right"
+            app:srcCompat="@drawable/edit" />
+
+        <TextView
+            android:id="@+id/textView9"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="15dp"
+            android:layout_row="5"
+            android:layout_column="0"
+            android:textColor="#000000"
+            android:textSize="22dp"
+            android:text="Email Address" />
+
+        <GridLayout
+            android:layout_width="230dp"
+            android:layout_height="0.2dp"
+            android:layout_marginLeft="10dp"
+            android:layout_row="6"
+            android:layout_column="0"
+            android:background="#000000">
+
+        </GridLayout>
+
+        <TextView
+            android:id="@+id/email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="20dp"
+            android:layout_row="7"
+            android:layout_column="0"
+            android:textSize="18dp"
+            android:text="admin@travelmate.com" />
+
+        <ImageView
+            android:id="@+id/edit_email"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_column="0"
+            android:layout_row="7"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="30dp"
+            android:layout_gravity="right"
+            app:srcCompat="@drawable/edit" />
 
     </GridLayout>
 

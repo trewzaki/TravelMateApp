@@ -1,5 +1,6 @@
 package com.tananut.travelmateapp;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -19,8 +20,17 @@ public class AccountActivity extends AppCompatActivity {
         _backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent startNewActivity = new Intent(AccountActivity.this, MainActivity.class);
+                startActivity(startNewActivity);
                 finish();
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent startNewActivity = new Intent(AccountActivity.this, MainActivity.class);
+        startActivity(startNewActivity);
+        finish();
     }
 }

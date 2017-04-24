@@ -30,7 +30,6 @@
                 android:layout_height="50dp"
                 android:layout_column="0"
                 android:layout_gravity="center_vertical"
-
                 android:layout_row="0"
                 android:scaleX="0.5"
                 android:scaleY="0.5"
@@ -43,16 +42,30 @@
                 android:layout_column="0"
                 android:layout_gravity="center"
                 android:layout_marginLeft="60dp"
-                android:layout_marginRight="15dp"
+                android:layout_marginBottom="3dp"
                 android:layout_row="0"
                 android:gravity="center"
                 android:text="Partners"
                 android:textColor="#114453"
                 android:textSize="25dp" />
 
+            <ImageView
+                android:id="@+id/add"
+                android:layout_width="65dp"
+                android:layout_height="50dp"
+                android:layout_column="1"
+                android:layout_gravity="right"
+                android:layout_marginRight="40dp"
+                android:layout_row="0"
+                android:scaleX="0.5"
+                android:scaleY="0.5"
+                app:srcCompat="@drawable/add" />
+
+
         </GridLayout>
 
         <GridLayout
+            android:id="@+id/grid1"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_row="1"
@@ -78,15 +91,17 @@
                 android:layout_gravity="left|center"
                 android:layout_marginLeft="20dp"
                 android:textSize="23dp"
-                android:text="Thatchai" />
+                android:text="Empty" />
 
         </GridLayout>
 
         <GridLayout
+            android:id="@+id/grid2"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_row="2"
             android:layout_column="0"
+            android:clickable="false"
             android:background="@drawable/back_edge">
 
             <ImageView
@@ -108,15 +123,17 @@
                 android:layout_gravity="left|center"
                 android:layout_marginLeft="20dp"
                 android:textSize="23dp"
-                android:text="Thatchai" />
+                android:text="Empty" />
 
         </GridLayout>
 
         <GridLayout
+            android:id="@+id/grid3"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_row="3"
             android:layout_column="0"
+            android:clickable="false"
             android:background="@drawable/back_edge">
 
             <ImageView
@@ -138,14 +155,16 @@
                 android:layout_gravity="left|center"
                 android:layout_marginLeft="20dp"
                 android:textSize="23dp"
-                android:text="Thatchai" />
+                android:text="Empty" />
         </GridLayout>
 
         <GridLayout
+            android:id="@+id/grid4"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_row="4"
             android:layout_column="0"
+            android:clickable="false"
             android:background="@drawable/back_edge">
 
             <ImageView
@@ -167,14 +186,16 @@
                 android:layout_gravity="left|center"
                 android:layout_marginLeft="20dp"
                 android:textSize="23dp"
-                android:text="Thatchai" />
+                android:text="Empty" />
         </GridLayout>
 
         <GridLayout
+            android:id="@+id/grid5"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_row="5"
             android:layout_column="0"
+            android:clickable="false"
             android:background="@drawable/back_edge">
 
             <ImageView
@@ -196,7 +217,7 @@
                 android:layout_gravity="left|center"
                 android:layout_marginLeft="20dp"
                 android:textSize="23dp"
-                android:text="Thatchai" />
+                android:text="Empty" />
         </GridLayout>
 
     </GridLayout>

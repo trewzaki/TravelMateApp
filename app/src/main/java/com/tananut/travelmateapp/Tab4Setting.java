@@ -19,6 +19,8 @@ import android.widget.TabHost;
 import android.widget.TextView;
 
 import static com.tananut.travelmateapp.Singleton.Tab1;
+import static com.tananut.travelmateapp.Singleton.Tab2;
+import static com.tananut.travelmateapp.Singleton.Tab3;
 
 public class Tab4Setting extends Fragment {
 
@@ -48,6 +50,11 @@ public class Tab4Setting extends Fragment {
                 public void onClick(View v) {
                     Intent startNewActivity = new Intent(getActivity(), AccountActivity.class);
                     startActivity(startNewActivity);
+                    getActivity().finish();
+                    Tab1()._chkCreate = false;
+                    Tab2()._chkCreate = false;
+                    Tab3()._chkCreate = false;
+                    _chkCreate = false;
                 }
             });
 
@@ -56,6 +63,11 @@ public class Tab4Setting extends Fragment {
                 public void onClick(View v) {
                     Intent startNewActivity = new Intent(getActivity(), PartnerActivity.class);
                     startActivity(startNewActivity);
+                    getActivity().finish();
+                    Tab1()._chkCreate = false;
+                    Tab2()._chkCreate = false;
+                    Tab3()._chkCreate = false;
+                    _chkCreate = false;
                 }
             });
 
@@ -64,6 +76,11 @@ public class Tab4Setting extends Fragment {
                 public void onClick(View v) {
                     Intent startNewActivity = new Intent(getActivity(), SecurityActivity.class);
                     startActivity(startNewActivity);
+                    getActivity().finish();
+                    Tab1()._chkCreate = false;
+                    Tab2()._chkCreate = false;
+                    Tab3()._chkCreate = false;
+                    _chkCreate = false;
                 }
             });
 
@@ -71,27 +88,30 @@ public class Tab4Setting extends Fragment {
                 @Override
                 public void onClick(View v) {
                     Intent startNewActivity = new Intent(getActivity(), FirstPageActivity.class);
-                    startNewActivity.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
-                            | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                     startActivity(startNewActivity);
 
                     mPrefs = getActivity().getSharedPreferences("label", 0);
                     SharedPreferences.Editor mEditor = mPrefs.edit();
                     mEditor.putString("LoginState", "0").commit();
 
-                    final ViewPager pager = (ViewPager) getActivity().findViewById(R.id.container);
-                    final TabLayout tabLayout = (TabLayout) getActivity().findViewById(R.id.tabs);
-                    tabLayout.setupWithViewPager(pager);
-                    tabLayout.setupWithViewPager(pager);
-                    tabLayout.getTabAt(0).setIcon(R.drawable.home);
-                    tabLayout.getTabAt(1).setIcon(R.drawable.map);
-                    tabLayout.getTabAt(2).setIcon(R.drawable.flag);
-                    tabLayout.getTabAt(3).setIcon(R.drawable.setting);
-                    pager.setCurrentItem(0);
+//                    final ViewPager pager = (ViewPager) getActivity().findViewById(R.id.container);
+//                    final TabLayout tabLayout = (TabLayout) getActivity().findViewById(R.id.tabs);
+//                    tabLayout.setupWithViewPager(pager);
+//                    tabLayout.setupWithViewPager(pager);
+//                    tabLayout.getTabAt(0).setIcon(R.drawable.home);
+//                    tabLayout.getTabAt(1).setIcon(R.drawable.map);
+//                    tabLayout.getTabAt(2).setIcon(R.drawable.flag);
+//                    tabLayout.getTabAt(3).setIcon(R.drawable.setting);
+//                    pager.setCurrentItem(0);
+
+                    Tab1()._chkCreate = false;
+                    Tab2()._chkCreate = false;
+                    Tab3()._chkCreate = false;
+                    getActivity().finish();
                 }
             });
 
-            _chkCreate = true;
+//            _chkCreate = true;
         }
         return rootView;
     }

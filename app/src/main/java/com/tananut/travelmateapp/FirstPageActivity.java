@@ -26,6 +26,7 @@ public class FirstPageActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent startNewActivity = new Intent(FirstPageActivity.this, SignUpActivity.class);
                 startActivity(startNewActivity);
+                finish();
             }
         });
 
@@ -34,6 +35,7 @@ public class FirstPageActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent startNewActivity = new Intent(FirstPageActivity.this, LoginActivity.class);
                 startActivity(startNewActivity);
+                finish();
             }
         });
     }
@@ -41,5 +43,9 @@ public class FirstPageActivity extends AppCompatActivity {
     public void EndActivity()
     {
         FirstPageActivity.this.finish();
+    }
+
+    @Override
+    public void onBackPressed() {
     }
 }

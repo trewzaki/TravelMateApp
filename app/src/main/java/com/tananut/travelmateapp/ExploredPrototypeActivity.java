@@ -67,6 +67,9 @@ public class ExploredPrototypeActivity extends AppCompatActivity {
             _buttonEditTopic = (ImageView) findViewById(R.id.topicText);
             _topicText = (TextView) findViewById(R.id.topic);
             _time = (TextView) findViewById(R.id.time);
+
+            Tab2()._chkCreate = false;
+
             String urlParameters = "";
             String api = "explored/getexplored/id/" + Tab3()._id;
 
@@ -127,6 +130,8 @@ public class ExploredPrototypeActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     _checkCreate = false;
+                    Intent startNewActivity = new Intent(ExploredPrototypeActivity.this, MainActivity.class);
+                    startActivity(startNewActivity);
                     finish();
                 }
             });
@@ -240,5 +245,13 @@ public class ExploredPrototypeActivity extends AppCompatActivity {
             });
             _checkCreate = true;
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        _checkCreate = false;
+        Intent startNewActivity = new Intent(ExploredPrototypeActivity.this, MainActivity.class);
+        startActivity(startNewActivity);
+        finish();
     }
 }

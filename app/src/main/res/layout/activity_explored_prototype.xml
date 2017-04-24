@@ -109,15 +109,15 @@
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:background="@drawable/circle"
-                android:paddingRight="15dp"
-                android:paddingLeft="10dp"
+                android:paddingRight="13dp"
+                android:paddingLeft="8dp"
                 android:layout_marginTop="5dp"
                 android:clickable="true"
                 android:layout_row="3"
                 android:layout_centerHorizontal="true"
                 android:layout_gravity="right|bottom"
                 android:layout_marginRight="15dp"
-                android:src="@drawable/share" />
+                android:src="@drawable/sharethis" />
 
             <TextView
                 android:id="@+id/time"

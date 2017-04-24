@@ -5,6 +5,7 @@ package com.tananut.travelmateapp;
  */
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.ScaleDrawable;
@@ -57,12 +58,14 @@ public class Tab3Explored extends Fragment {
     private LinearLayout _mainGrid;
     private EditText _searchText;
 
+    private SharedPreferences mPrefs;
+
     public int _id;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        if (!_chkCreate) {
+        if (!Tab3()._chkCreate) {
             rootView = inflater.inflate(R.layout.tab3explored, container, false);
 
             Tab3()._mainGrid   = (LinearLayout) rootView.findViewById(R.id.main_grid);
@@ -80,56 +83,62 @@ public class Tab3Explored extends Fragment {
                 @Override
                 public void onTextChanged(CharSequence s, int start,
                                           int before, int count) {
+                    mPrefs = getActivity().getSharedPreferences("label", 0);
+                    String user_id = mPrefs.getString("id", "default_value_if_variable_not_found");
+
                     String string_search = Tab3()._searchText.getText().toString();
 
                     String urlParameters = "text=" + string_search;
-                    String api = "explored/searchexplored/uid/1";
+                    String api = "explored/searchexplored/uid/" + user_id;
 
                     try {
                         JSONObject modelReader = REST_API(api, urlParameters);
                         boolean success = modelReader.getBoolean("success");
-                        JSONArray model = modelReader.getJSONArray("model");
                         Tab3()._mainGrid.removeAllViews();
 
                         if (success) {
+                            JSONArray model = modelReader.getJSONArray("model");
                             for (int i = 0; i < model.length(); i++) {
                                 Log.d("Response id :", model.getJSONObject(i).getString("id"));
                                 Log.d("Response name :", model.getJSONObject(i).getString("name"));
                                 CreateButton(model, i);
                             }
                         }
-                        _chkCreate = true;
+                        Tab3()._chkCreate = true;
                     }
                     catch (Exception e) {
                         Toast.makeText(getActivity(), "No Internet Connection", Toast.LENGTH_SHORT).show();
-                        _chkCreate = false;
+                        Tab3()._chkCreate = false;
                     }
                 }
             });
 
+            mPrefs = getActivity().getSharedPreferences("label", 0);
+            String user_id = mPrefs.getString("id", "default_value_if_variable_not_found");
+
             String urlParameters = "";
-            String api = "explored/getallexplored/uid/1";
+            String api = "explored/getallexplored/uid/" + user_id;
 
             try {
 //                loadingScreen(true);
 //                wait(3000);
                 JSONObject modelReader = REST_API(api, urlParameters);
                 boolean success = modelReader.getBoolean("success");
-                JSONArray model = modelReader.getJSONArray("model");
 
                 if (success) {
+                    JSONArray model = modelReader.getJSONArray("model");
                     for (int i = 0; i < model.length(); i++) {
                         Log.d("Response id :", model.getJSONObject(i).getString("id"));
                         Log.d("Response name :", model.getJSONObject(i).getString("name"));
                         CreateButton(model, i);
                     }
                 }
-                _chkCreate = true;
+                Tab3()._chkCreate = true;
 //                loadingScreen(false);
             }
             catch (Exception e){
                 Toast.makeText(getActivity(), "No Internet Connection", Toast.LENGTH_SHORT).show();
-                _chkCreate = false;
+                Tab3()._chkCreate = false;
 //                loadingScreen(false);
             }
         }
@@ -137,28 +146,31 @@ public class Tab3Explored extends Fragment {
     }
 
     public void refresh() {
+        mPrefs = getActivity().getSharedPreferences("label", 0);
+        String user_id = mPrefs.getString("id", "default_value_if_variable_not_found");
+
         Log.d("Refresh symtems :", "Running!");
         Tab3()._mainGrid.removeAllViews();
         String urlParameters = "";
-        String api = "explored/getallexplored/uid/1";
+        String api = "explored/getallexplored/uid/" + user_id;
 
         try {
             JSONObject modelReader = REST_API(api, urlParameters);
             boolean success = modelReader.getBoolean("success");
-            JSONArray model = modelReader.getJSONArray("model");
 
             if (success) {
+                JSONArray model = modelReader.getJSONArray("model");
                 for (int i = 0; i < model.length(); i++) {
                     Log.d("Response id :", model.getJSONObject(i).getString("id"));
                     Log.d("Response name :", model.getJSONObject(i).getString("name"));
                     CreateButton(model, i);
                 }
             }
-            _chkCreate = true;
+            Tab3()._chkCreate = true;
         }
         catch (Exception e){
             Toast.makeText(getActivity(), "No Internet Connection", Toast.LENGTH_SHORT).show();
-            _chkCreate = false;
+            Tab3()._chkCreate = false;
         }
     }
 
@@ -193,6 +205,7 @@ public class Tab3Explored extends Fragment {
                 public void onClick(View v) {
                     Intent startNewActivity = new Intent(getActivity(), ExploredPrototypeActivity.class);
                     startActivity(startNewActivity);
+                    getActivity().finish();
 
                     Log.d("Debug Id refresh :", "" + Tab3()._id);
                     Log.d("Debug getId :", "" + v.getId());
@@ -204,7 +217,7 @@ public class Tab3Explored extends Fragment {
             });
         } catch (Exception e){
             Toast.makeText(getActivity(), "No Internet Connection", Toast.LENGTH_SHORT).show();
-            _chkCreate = false;
+            Tab3()._chkCreate = false;
         }
     }
 }

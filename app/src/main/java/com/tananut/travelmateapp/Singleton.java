@@ -32,6 +32,7 @@ public class Singleton {
     private static Tab4Setting _tab4 = new Tab4Setting();
     private static ExploredPrototypeActivity _exPro = new ExploredPrototypeActivity();
     private static FirstPageActivity _firstPage = new FirstPageActivity();
+    private static PartnerActivity _partner = new PartnerActivity();
 
     public static MainActivity Main() {
         return _main;
@@ -60,6 +61,10 @@ public class Singleton {
     public static FirstPageActivity FirstPage()
     {
         return _firstPage;
+    }
+
+    public static PartnerActivity Partner() {
+        return _partner;
     }
 
     public static JSONObject REST_API(String api, String params) {

@@ -53,4 +53,13 @@
         android:switchMinWidth="80dp"
         android:switchPadding="300dp" />
 
+    <Button
+        android:id="@+id/Lock"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="29dp"
+        android:text="Lock"
+        android:layout_below="@+id/travelling_switch"
+        android:layout_alignStart="@+id/textView2" />
+
 </RelativeLayout>

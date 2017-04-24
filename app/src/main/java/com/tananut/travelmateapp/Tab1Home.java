@@ -10,6 +10,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.net.Uri;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
@@ -18,8 +19,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.Switch;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -48,9 +51,11 @@ import javax.net.ssl.HttpsURLConnection;
 
 import static com.tananut.travelmateapp.Singleton.Tab1;
 
+import android.content.Intent;
 public class Tab1Home extends Fragment{
 
     private Switch _travellingSwitch;
+    private Button _lock;
     private static Tab2Map _tab2;
     private View rootView;
     public boolean _chkCreate = false;
@@ -69,80 +74,38 @@ public class Tab1Home extends Fragment{
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     if (isChecked) {
-                        // RestAPI POST
-//                        try {
-//                            String urlParameters  = "";
-////                            String urlParameters  = "param1=a&param2=b&param3=c";
-//                            byte[] postData       = urlParameters.getBytes( StandardCharsets.UTF_8 );
-//                            int    postDataLength = postData.length;
-//                            String requestUrl="http://192.168.1.2:100/nsc2017/api/block/getpopularaddon";
-//                            URL url = new URL(requestUrl);
-//                            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-//                            conn.setReadTimeout(10000);
-//                            conn.setConnectTimeout(15000);
-//                            conn.setRequestMethod("POST");
-//                            conn.setRequestProperty( "Content-Type", "application/x-www-form-urlencoded");
-//                            conn.setRequestProperty( "charset", "utf-8");
-//                            conn.setRequestProperty( "Content-Length", Integer.toString( postDataLength ));
-//                            conn.setDoInput(true);
-//                            conn.setDoOutput(true);
-//
-//                            OutputStream os = conn.getOutputStream();
-//                            BufferedWriter writer = new BufferedWriter(
-//                                    new OutputStreamWriter(os, "UTF-8"));
-//                            try( DataOutputStream wr = new DataOutputStream( conn.getOutputStream())) {
-//                                wr.write( postData );
-//                            }
-////                            writer.write("");
-//                            writer.flush();
-//                            writer.close();
-//                            os.close();
-//
-//                            conn.connect();
-//                            BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-//                            jsonString = new StringBuffer();
-//                            String line;
-//                            ArrayList<Block> eiei;
-//                            while ((line = br.readLine()) != null && (line = br.readLine()) != "") {
-//                                jsonString.append(line);
-////                                eiei.add(line);
-//                            }
-//                            br.close();
-//                            conn.disconnect();
-//
-//                            _model = new JSONObject(jsonString.toString());
-//                            boolean success = _model.getBoolean("success");
-//                            JSONArray addons = _model.getJSONArray("addons");
-//
-//                            if (success) {
-//                                for (int i=0; i<addons.length(); i++) {
-//                                    Log.d("Response id :", addons.getJSONObject(i).getString("id"));
-//                                    Log.d("Response name :", addons.getJSONObject(i).getString("name"));
-//                                    Log.d("Response description :", addons.getJSONObject(i).getString("description"));
-//                                }
-//                            }
-//
-//                        } catch (Exception e) {
-//                            throw new RuntimeException(e.getMessage());
-//                        }
+                        // TODO Here : Drive
+                        String my_email = "auntafung@gmail.com";
+                        String my_subject = "Test send email system!";
+                        String my_message = " very Greating ! ";
 
+                        try {
+                            GMailSender sender = new GMailSender("drivebird123@gmail.com", "birdisbird");
+                            sender.sendMail("This is Subject",
+                                    "http://maps.google.com/maps?daddr=18.7838134,98.9598571",
+                                    "drivebird123@gmail.com",
+                                    "auntafung@gmail.com");
+                        } catch (Exception e) {
+                            Log.e("SendMail", e.getMessage(), e);
+                        }
 
-
-//                        Gson gson = new Gson();
-//                        Block block = gson.fromJson(jsonString.toString(), Block.class);
-//                        Log.d("Response : ", jsonString.toString());
-
-                        // End RestAPI POST
-
+                        Toast.makeText(getActivity(), "Hum!", Toast.LENGTH_SHORT).show();
                     }
-//                    else {
-//                        Tab1Home._tab2.StopHighLight();
-//                    }
                 }
             });
 
             Tab1()._chkCreate = true;
         }
+
+        _lock = (Button) rootView.findViewById(R.id.Lock);
+        _lock.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                // TODO Here : Drive Lock device.
+            }
+        });
+
         return rootView;
     }
 

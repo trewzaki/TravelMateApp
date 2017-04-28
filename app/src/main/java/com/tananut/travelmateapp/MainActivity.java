@@ -64,9 +64,16 @@ public class MainActivity extends AppCompatActivity {
         }
 
         mPrefs = getSharedPreferences("label", 0);
-//        SharedPreferences.Editor mEditor = mPrefs.edit();
-//        mEditor.putString("LoginState", "0").commit();
+        SharedPreferences.Editor mEditor = mPrefs.edit();
         String mString = mPrefs.getString("LoginState", "default_value_if_variable_not_found");
+
+        String chkIdleTime = mPrefs.getString("IdleTime", "NULL");
+        String chkSafeTime = mPrefs.getString("SafeTime", "NULL");
+
+        if (chkIdleTime.equals("NULL"))
+            mEditor.putString("IdleTime", "30").commit();
+        if (chkSafeTime.equals("NULL"))
+            mEditor.putString("SafeTime", "5").commit();
 
         if (!mString.equals("1"))
         {

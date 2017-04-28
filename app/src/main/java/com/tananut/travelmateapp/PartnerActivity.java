@@ -3,12 +3,16 @@ package com.tananut.travelmateapp;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.media.Image;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.InputType;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -20,9 +24,13 @@ import android.widget.Toast;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.Calendar;
 
 import static com.tananut.travelmateapp.Singleton.Partner;
@@ -84,6 +92,8 @@ public class PartnerActivity extends AppCompatActivity {
         String urlParameters = "";
         String api = "partner/count/id/" + user_id;
 
+        initialPartners();
+
         try {
             JSONObject modelReader = REST_API(api, urlParameters);
             boolean success = modelReader.getBoolean("success");
@@ -95,7 +105,6 @@ public class PartnerActivity extends AppCompatActivity {
             else {
                 Toast.makeText(PartnerActivity.this, "Something Wrong!.", Toast.LENGTH_SHORT).show();
             }
-
         }
         catch (Exception e){
             Toast.makeText(PartnerActivity.this, "No Internet Connection", Toast.LENGTH_SHORT).show();
@@ -104,8 +113,8 @@ public class PartnerActivity extends AppCompatActivity {
         _backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent startNewActivity = new Intent(PartnerActivity.this, MainActivity.class);
-                startActivity(startNewActivity);
+//                Intent startNewActivity = new Intent(PartnerActivity.this, MainActivity.class);
+//                startActivity(startNewActivity);
                 finish();
             }
         });
@@ -113,7 +122,7 @@ public class PartnerActivity extends AppCompatActivity {
         _addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (_count < 5) {
+                if (_count <= 5) {
                     final String[] email = new String[1];
                     final String[] name = new String[1];
                     final String[] phone_number = new String[1];
@@ -128,12 +137,19 @@ public class PartnerActivity extends AppCompatActivity {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             name[0] = input.getText().toString() + "";
-                            final String[] name_split = name[0].split(" ");
+                            final String[] name_split = new String[2];
+                            final String[] name_split_res = name[0].split(" ");
+                            name_split[0] = name_split_res[0];
+
+                            if (name_split_res.length == 2)
+                                name_split[1] = name_split_res[1];
+                            else
+                                name_split[1] = "";
 
                             final AlertDialog.Builder builder = new AlertDialog.Builder(PartnerActivity.this);
                             builder.setTitle("Enter partner's email.");
                             final EditText input = new EditText(PartnerActivity.this);
-                            input.setInputType(InputType.TYPE_CLASS_TEXT);
+                            input.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
                             builder.setView(input);
 
                             builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
@@ -144,7 +160,7 @@ public class PartnerActivity extends AppCompatActivity {
                                     final AlertDialog.Builder builder = new AlertDialog.Builder(PartnerActivity.this);
                                     builder.setTitle("Enter partner's phone number.");
                                     final EditText input = new EditText(PartnerActivity.this);
-                                    input.setInputType(InputType.TYPE_CLASS_TEXT);
+                                    input.setInputType(InputType.TYPE_CLASS_NUMBER);
                                     builder.setView(input);
 
                                     builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
@@ -152,28 +168,32 @@ public class PartnerActivity extends AppCompatActivity {
                                         public void onClick(DialogInterface dialog, int which) {
                                             phone_number[0] = input.getText().toString() + "";
 
-                                            mPrefs = getSharedPreferences("label", 0);
-                                            String user_id = mPrefs.getString("id", "default_value_if_variable_not_found");
-                                            String urlParameters = "user_id=" + user_id +
-                                                                   "&email=" + email[0] +
-                                                                   "&first_name=" + name_split[0] +
-                                                                   "&last_name=" + name_split[1] +
-                                                                   "&phone_number=" + phone_number[0];
-                                            String api = "partner/addpartner";
-                                            try {
-                                                JSONObject modelReader = REST_API(api, urlParameters);
-                                                boolean success = modelReader.getBoolean("success");
-                                                if (success) {
-                                                    int id = modelReader.getInt("id");
-                                                    setPartners(_count, name[0], id);
-                                                    _count++;
-                                                } else {
-                                                    Toast.makeText(PartnerActivity.this, "Something Wrong!", Toast.LENGTH_SHORT).show();
+                                            if (!name[0].equals("") && !email[0].equals("") && !phone_number[0].equals("") && isValidEmail(email[0])) {
+                                                mPrefs = getSharedPreferences("label", 0);
+                                                String user_id = mPrefs.getString("id", "default_value_if_variable_not_found");
+                                                String urlParameters = "user_id=" + user_id +
+                                                        "&email=" + email[0] +
+                                                        "&first_name=" + name_split[0] +
+                                                        "&last_name=" + name_split[1] +
+                                                        "&phone_number=" + phone_number[0];
+                                                String api = "partner/addpartner";
+                                                try {
+                                                    JSONObject modelReader = REST_API(api, urlParameters);
+                                                    boolean success = modelReader.getBoolean("success");
+                                                    if (success) {
+                                                        int id = modelReader.getInt("id");
+                                                        setPartners(_count, name_split[0], id);
+                                                        _count++;
+                                                    } else {
+                                                        Toast.makeText(PartnerActivity.this, "Something Wrong!", Toast.LENGTH_SHORT).show();
+                                                    }
+                                                } catch (JSONException e) {
+                                                    Toast.makeText(PartnerActivity.this, "No Internet Connection", Toast.LENGTH_SHORT).show();
+                                                    e.printStackTrace();
                                                 }
-                                            } catch (JSONException e) {
-                                                Toast.makeText(PartnerActivity.this, "No Internet Connection", Toast.LENGTH_SHORT).show();
-                                                e.printStackTrace();
                                             }
+                                            else
+                                                Toast.makeText(PartnerActivity.this, "Invalid input.", Toast.LENGTH_SHORT).show();
 //                                            Log.d("DEBUG Partner's Name : ", name[0]);
 //                                            Log.d("DEBUG Partner's First name : ", name_split[0]);
 //                                            Log.d("DEBUG Partner's Last name : ", name_split[1]);
@@ -222,6 +242,7 @@ public class PartnerActivity extends AppCompatActivity {
                         Partner()._id = _grid1.getId();
                         Intent startNewActivity = new Intent(PartnerActivity.this, PartnerDetailActivity.class);
                         startActivity(startNewActivity);
+                        finish();
                     }
                 });
                 break;
@@ -232,6 +253,7 @@ public class PartnerActivity extends AppCompatActivity {
                         Partner()._id = _grid1.getId();
                         Intent startNewActivity = new Intent(PartnerActivity.this, PartnerDetailActivity.class);
                         startActivity(startNewActivity);
+                        finish();
                     }
                 });
 
@@ -241,6 +263,7 @@ public class PartnerActivity extends AppCompatActivity {
                         Partner()._id = _grid2.getId();
                         Intent startNewActivity = new Intent(PartnerActivity.this, PartnerDetailActivity.class);
                         startActivity(startNewActivity);
+                        finish();
                     }
                 });
                 break;
@@ -251,6 +274,7 @@ public class PartnerActivity extends AppCompatActivity {
                         Partner()._id = _grid1.getId();
                         Intent startNewActivity = new Intent(PartnerActivity.this, PartnerDetailActivity.class);
                         startActivity(startNewActivity);
+                        finish();
                     }
                 });
 
@@ -260,6 +284,7 @@ public class PartnerActivity extends AppCompatActivity {
                         Partner()._id = _grid2.getId();
                         Intent startNewActivity = new Intent(PartnerActivity.this, PartnerDetailActivity.class);
                         startActivity(startNewActivity);
+                        finish();
                     }
                 });
 
@@ -269,6 +294,7 @@ public class PartnerActivity extends AppCompatActivity {
                         Partner()._id = _grid3.getId();
                         Intent startNewActivity = new Intent(PartnerActivity.this, PartnerDetailActivity.class);
                         startActivity(startNewActivity);
+                        finish();
                     }
                 });
                 break;
@@ -279,6 +305,7 @@ public class PartnerActivity extends AppCompatActivity {
                         Partner()._id = _grid1.getId();
                         Intent startNewActivity = new Intent(PartnerActivity.this, PartnerDetailActivity.class);
                         startActivity(startNewActivity);
+                        finish();
                     }
                 });
 
@@ -288,6 +315,7 @@ public class PartnerActivity extends AppCompatActivity {
                         Partner()._id = _grid2.getId();
                         Intent startNewActivity = new Intent(PartnerActivity.this, PartnerDetailActivity.class);
                         startActivity(startNewActivity);
+                        finish();
                     }
                 });
 
@@ -297,6 +325,7 @@ public class PartnerActivity extends AppCompatActivity {
                         Partner()._id = _grid3.getId();
                         Intent startNewActivity = new Intent(PartnerActivity.this, PartnerDetailActivity.class);
                         startActivity(startNewActivity);
+                        finish();
                     }
                 });
 
@@ -306,6 +335,7 @@ public class PartnerActivity extends AppCompatActivity {
                         Partner()._id = _grid4.getId();
                         Intent startNewActivity = new Intent(PartnerActivity.this, PartnerDetailActivity.class);
                         startActivity(startNewActivity);
+                        finish();
                     }
                 });
                 break;
@@ -316,6 +346,7 @@ public class PartnerActivity extends AppCompatActivity {
                         Partner()._id = _grid1.getId();
                         Intent startNewActivity = new Intent(PartnerActivity.this, PartnerDetailActivity.class);
                         startActivity(startNewActivity);
+                        finish();
                     }
                 });
 
@@ -325,6 +356,7 @@ public class PartnerActivity extends AppCompatActivity {
                         Partner()._id = _grid2.getId();
                         Intent startNewActivity = new Intent(PartnerActivity.this, PartnerDetailActivity.class);
                         startActivity(startNewActivity);
+                        finish();
                     }
                 });
 
@@ -334,6 +366,7 @@ public class PartnerActivity extends AppCompatActivity {
                         Partner()._id = _grid3.getId();
                         Intent startNewActivity = new Intent(PartnerActivity.this, PartnerDetailActivity.class);
                         startActivity(startNewActivity);
+                        finish();
                     }
                 });
 
@@ -343,6 +376,7 @@ public class PartnerActivity extends AppCompatActivity {
                         Partner()._id = _grid4.getId();
                         Intent startNewActivity = new Intent(PartnerActivity.this, PartnerDetailActivity.class);
                         startActivity(startNewActivity);
+                        finish();
                     }
                 });
 
@@ -352,14 +386,88 @@ public class PartnerActivity extends AppCompatActivity {
                         Partner()._id = _grid5.getId();
                         Intent startNewActivity = new Intent(PartnerActivity.this, PartnerDetailActivity.class);
                         startActivity(startNewActivity);
+                        finish();
                     }
                 });
                 break;
         }
     }
 
-    public void initialPartners(int number) {
+    public void initialPartners() {
+        mPrefs = getSharedPreferences("label", 0);
+        String user_id = mPrefs.getString("id", "default_value_if_variable_not_found");
 
+        String urlParameters = "";
+        String api = "partner/getallpartner/id/" + user_id;
+
+        try {
+            JSONObject modelReader = REST_API(api, urlParameters);
+            boolean success = modelReader.getBoolean("success");
+
+            if (success) {
+                JSONArray model = modelReader.getJSONArray("model");
+                for (int i=0; i<model.length(); i++) {
+                    String name = model.getJSONObject(i).getString("first_name");
+                    int id = model.getJSONObject(i).getInt("id");
+                    String image_path = model.getJSONObject(i).getString("image_src");
+                    URL url = new URL(image_path);
+                    HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                    connection.setDoInput(true);
+                    connection.connect();
+                    InputStream input = connection.getInputStream();
+                    Bitmap myBitmap = BitmapFactory.decodeStream(input);
+
+                    switch (i) {
+                        case 0 :
+                            _grid1.setId(id);
+                            _name1.setText(name);
+                            if (myBitmap == null)
+                                _picture1.setImageDrawable(ContextCompat.getDrawable(PartnerActivity.this, R.drawable.black_user));
+                            else
+                                _picture1.setImageBitmap(myBitmap);
+                            break;
+                        case 1 :
+                            _grid2.setId(id);
+                            _name2.setText(name);
+                            if (myBitmap == null)
+                                _picture2.setImageDrawable(ContextCompat.getDrawable(PartnerActivity.this, R.drawable.black_user));
+                            else
+                                _picture2.setImageBitmap(myBitmap);
+                            break;
+                        case 2 :
+                            _grid3.setId(id);
+                            _name3.setText(name);
+                            if (myBitmap == null)
+                                _picture3.setImageDrawable(ContextCompat.getDrawable(PartnerActivity.this, R.drawable.black_user));
+                            else
+                                _picture3.setImageBitmap(myBitmap);
+                            break;
+                        case 3 :
+                            _grid4.setId(id);
+                            _name4.setText(name);
+                            if (myBitmap == null)
+                                _picture4.setImageDrawable(ContextCompat.getDrawable(PartnerActivity.this, R.drawable.black_user));
+                            else
+                                _picture4.setImageBitmap(myBitmap);
+                            break;
+                        case 4 :
+                            _grid5.setId(id);
+                            _name5.setText(name);
+                            if (myBitmap == null)
+                                _picture5.setImageDrawable(ContextCompat.getDrawable(PartnerActivity.this, R.drawable.black_user));
+                            else
+                                _picture5.setImageBitmap(myBitmap);
+                            break;
+                    }
+                }
+            }
+            else {
+                Toast.makeText(PartnerActivity.this, "Something Wrong!", Toast.LENGTH_SHORT).show();
+            }
+        }
+        catch (Exception e){
+            Toast.makeText(PartnerActivity.this, "No Internet Connection", Toast.LENGTH_SHORT).show();
+        }
     }
 
     public void setPartners(int number, String name, int id) {
@@ -367,35 +475,84 @@ public class PartnerActivity extends AppCompatActivity {
             case 1 :
                 _name1.setText(name);
                 _grid1.setClickable(true);
+                _grid1.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Partner()._id = _grid1.getId();
+                        Intent startNewActivity = new Intent(PartnerActivity.this, PartnerDetailActivity.class);
+                        startActivity(startNewActivity);
+                        finish();
+                    }
+                });
                 _grid1.setId(id);
                 break;
             case 2 :
                 _name2.setText(name);
                 _grid2.setClickable(true);
+                _grid2.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Partner()._id = _grid2.getId();
+                        Intent startNewActivity = new Intent(PartnerActivity.this, PartnerDetailActivity.class);
+                        startActivity(startNewActivity);
+                        finish();
+                    }
+                });
                 _grid2.setId(id);
                 break;
             case 3 :
                 _name3.setText(name);
                 _grid3.setClickable(true);
+                _grid3.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Partner()._id = _grid3.getId();
+                        Intent startNewActivity = new Intent(PartnerActivity.this, PartnerDetailActivity.class);
+                        startActivity(startNewActivity);
+                        finish();
+                    }
+                });
                 _grid3.setId(id);
                 break;
             case 4 :
                 _name4.setText(name);
                 _grid4.setClickable(true);
+                _grid4.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Partner()._id = _grid4.getId();
+                        Intent startNewActivity = new Intent(PartnerActivity.this, PartnerDetailActivity.class);
+                        startActivity(startNewActivity);
+                        finish();
+                    }
+                });
                 _grid4.setId(id);
                 break;
             case 5 :
                 _name5.setText(name);
                 _grid5.setClickable(true);
+                _grid5.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Partner()._id = _grid5.getId();
+                        Intent startNewActivity = new Intent(PartnerActivity.this, PartnerDetailActivity.class);
+                        startActivity(startNewActivity);
+                        finish();
+                    }
+                });
                 _grid5.setId(id);
                 break;
         }
     }
 
-    @Override
-    public void onBackPressed() {
-        Intent startNewActivity = new Intent(PartnerActivity.this, MainActivity.class);
-        startActivity(startNewActivity);
-        finish();
+    public final static boolean isValidEmail(CharSequence target) {
+        return !TextUtils.isEmpty(target) && android.util.Patterns.EMAIL_ADDRESS.matcher(target).matches();
     }
+
+//    @Override
+//    public void onBackPressed() {
+//        Intent startNewActivity = new Intent(PartnerActivity.this, MainActivity.class);
+//        startActivity(startNewActivity);
+//        finish();
+//    }
 }

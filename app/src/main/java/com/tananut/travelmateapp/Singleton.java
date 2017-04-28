@@ -24,7 +24,7 @@ import static com.tananut.travelmateapp.MainActivity.loadingScreen;
  */
 
 public class Singleton {
-    private static String api_path = "http://188.166.185.71/travel-mate/api/";
+    private static String api_path = "http://10.80.66.198:100/travel-mate/api/";
     private static MainActivity _main = new MainActivity();
     private static Tab1Home _tab1 = new Tab1Home();
     private static Tab2Map _tab2 = new Tab2Map();

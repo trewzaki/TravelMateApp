@@ -7,38 +7,38 @@
     tools:context="com.tananut.travelmateapp.MainActivity$PlaceholderFragment">
 
 
-    <GridLayout
-        android:id="@+id/button_account"
-        android:layout_width="match_parent"
-        android:layout_height="55dp"
-        android:layout_marginTop="1dp"
-        android:clickable="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:background="@drawable/selector">
+    <!--<GridLayout-->
+        <!--android:id="@+id/button_account"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="55dp"-->
+        <!--android:layout_marginTop="1dp"-->
+        <!--android:clickable="true"-->
+        <!--android:layout_alignParentStart="true"-->
+        <!--android:layout_alignParentTop="true"-->
+        <!--android:background="@drawable/selector">-->
 
 
-        <ImageView
-            android:id="@+id/imageView1"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="20dp"
-            android:layout_marginBottom="2dp"
-            app:srcCompat="@drawable/account"
-            />
+        <!--<ImageView-->
+            <!--android:id="@+id/imageView1"-->
+            <!--android:layout_width="35dp"-->
+            <!--android:layout_height="35dp"-->
+            <!--android:layout_gravity="center_vertical"-->
+            <!--android:layout_marginLeft="20dp"-->
+            <!--android:layout_marginBottom="2dp"-->
+            <!--app:srcCompat="@drawable/account"-->
+            <!--/>-->
 
-        <TextView
-            android:id="@+id/textView1"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="ACCOUNT"
-            android:textColor="#000000"
-            android:paddingLeft="25dp"
-            android:paddingTop="16dp"
-            android:textSize="16dp" />
+        <!--<TextView-->
+            <!--android:id="@+id/textView1"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:text="ACCOUNT"-->
+            <!--android:textColor="#000000"-->
+            <!--android:paddingLeft="25dp"-->
+            <!--android:paddingTop="16dp"-->
+            <!--android:textSize="16dp" />-->
 
-    </GridLayout>
+    <!--</GridLayout>-->
 
     <GridLayout
         android:id="@+id/button_parters"
@@ -95,7 +95,7 @@
             android:id="@+id/textView3"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="SECURITY"
+            android:text="SETTING"
             android:textColor="#000000"
             android:paddingLeft="25dp"
             android:paddingTop="16dp"

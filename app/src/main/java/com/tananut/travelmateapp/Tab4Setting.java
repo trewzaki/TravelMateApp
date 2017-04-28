@@ -40,34 +40,34 @@ public class Tab4Setting extends Fragment {
         if (!_chkCreate) {
             rootView = inflater.inflate(R.layout.tab4setting, container, false);
 
-            _accountButton  = (GridLayout) rootView.findViewById(R.id.button_account);
+//            _accountButton  = (GridLayout) rootView.findViewById(R.id.button_account);
             _partnersButton   = (GridLayout) rootView.findViewById(R.id.button_parters);
             _securityButton = (GridLayout) rootView.findViewById(R.id.button_security);
             _logoutButton   = (GridLayout) rootView.findViewById(R.id.button_logout);
 
-            _accountButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent startNewActivity = new Intent(getActivity(), AccountActivity.class);
-                    startActivity(startNewActivity);
-                    getActivity().finish();
-                    Tab1()._chkCreate = false;
-                    Tab2()._chkCreate = false;
-                    Tab3()._chkCreate = false;
-                    _chkCreate = false;
-                }
-            });
+//            _accountButton.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    Intent startNewActivity = new Intent(getActivity(), AccountActivity.class);
+//                    startActivity(startNewActivity);
+//                    getActivity().finish();
+//                    Tab1()._chkCreate = false;
+//                    Tab2()._chkCreate = false;
+//                    Tab3()._chkCreate = false;
+//                    _chkCreate = false;
+//                }
+//            });
 
             _partnersButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent startNewActivity = new Intent(getActivity(), PartnerActivity.class);
                     startActivity(startNewActivity);
-                    getActivity().finish();
-                    Tab1()._chkCreate = false;
-                    Tab2()._chkCreate = false;
-                    Tab3()._chkCreate = false;
-                    _chkCreate = false;
+//                    getActivity().finish();
+//                    Tab1()._chkCreate = false;
+//                    Tab2()._chkCreate = false;
+//                    Tab3()._chkCreate = false;
+//                    _chkCreate = false;
                 }
             });
 
@@ -76,11 +76,11 @@ public class Tab4Setting extends Fragment {
                 public void onClick(View v) {
                     Intent startNewActivity = new Intent(getActivity(), SecurityActivity.class);
                     startActivity(startNewActivity);
-                    getActivity().finish();
-                    Tab1()._chkCreate = false;
-                    Tab2()._chkCreate = false;
-                    Tab3()._chkCreate = false;
-                    _chkCreate = false;
+//                    getActivity().finish();
+//                    Tab1()._chkCreate = false;
+//                    Tab2()._chkCreate = false;
+//                    Tab3()._chkCreate = false;
+//                    _chkCreate = false;
                 }
             });
 
@@ -94,15 +94,15 @@ public class Tab4Setting extends Fragment {
                     SharedPreferences.Editor mEditor = mPrefs.edit();
                     mEditor.putString("LoginState", "0").commit();
 
-//                    final ViewPager pager = (ViewPager) getActivity().findViewById(R.id.container);
-//                    final TabLayout tabLayout = (TabLayout) getActivity().findViewById(R.id.tabs);
-//                    tabLayout.setupWithViewPager(pager);
-//                    tabLayout.setupWithViewPager(pager);
-//                    tabLayout.getTabAt(0).setIcon(R.drawable.home);
-//                    tabLayout.getTabAt(1).setIcon(R.drawable.map);
-//                    tabLayout.getTabAt(2).setIcon(R.drawable.flag);
-//                    tabLayout.getTabAt(3).setIcon(R.drawable.setting);
-//                    pager.setCurrentItem(0);
+                    final ViewPager pager = (ViewPager) getActivity().findViewById(R.id.container);
+                    final TabLayout tabLayout = (TabLayout) getActivity().findViewById(R.id.tabs);
+                    tabLayout.setupWithViewPager(pager);
+                    tabLayout.setupWithViewPager(pager);
+                    tabLayout.getTabAt(0).setIcon(R.drawable.home);
+                    tabLayout.getTabAt(1).setIcon(R.drawable.map);
+                    tabLayout.getTabAt(2).setIcon(R.drawable.flag);
+                    tabLayout.getTabAt(3).setIcon(R.drawable.setting);
+                    pager.setCurrentItem(0);
 
                     Tab1()._chkCreate = false;
                     Tab2()._chkCreate = false;

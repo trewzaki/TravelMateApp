@@ -78,8 +78,8 @@ public class ExploredPrototypeActivity extends AppCompatActivity {
                 Log.d("REST API PATH :", api);
                 JSONObject modelReader = REST_API(api, urlParameters);
                 boolean success = modelReader.getBoolean("success");
-                JSONArray model = modelReader.getJSONArray("model");
                 if (success) {
+                    JSONArray model = modelReader.getJSONArray("model");
                     for (int i = 0; i < model.length(); i++) {
                         Log.d("Response id :", model.getJSONObject(i).getString("id"));
                         Log.d("Response name :", model.getJSONObject(i).getString("name"));
@@ -130,8 +130,8 @@ public class ExploredPrototypeActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     _checkCreate = false;
-                    Intent startNewActivity = new Intent(ExploredPrototypeActivity.this, MainActivity.class);
-                    startActivity(startNewActivity);
+//                    Intent startNewActivity = new Intent(ExploredPrototypeActivity.this, MainActivity.class);
+//                    startActivity(startNewActivity);
                     finish();
                 }
             });
@@ -250,8 +250,8 @@ public class ExploredPrototypeActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         _checkCreate = false;
-        Intent startNewActivity = new Intent(ExploredPrototypeActivity.this, MainActivity.class);
-        startActivity(startNewActivity);
+//        Intent startNewActivity = new Intent(ExploredPrototypeActivity.this, MainActivity.class);
+//        startActivity(startNewActivity);
         finish();
     }
 }

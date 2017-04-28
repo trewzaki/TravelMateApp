@@ -18,6 +18,7 @@ import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Environment;
 import android.support.constraint.ConstraintLayout;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
@@ -25,6 +26,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.text.InputType;
 import android.util.Log;
@@ -58,6 +60,7 @@ import org.json.JSONObject;
 import static com.tananut.travelmateapp.R.id.container;
 import static com.tananut.travelmateapp.R.id.fadeScreen;
 import static com.tananut.travelmateapp.Singleton.REST_API;
+import static com.tananut.travelmateapp.Singleton.Tab1;
 import static com.tananut.travelmateapp.Singleton.Tab2;
 import static com.tananut.travelmateapp.Singleton.Tab3;
 
@@ -140,10 +143,28 @@ public class Tab2Map extends Fragment implements LocationListener{
                     if (!_isTrack) {
                         _buttonTrackingText.setText("TRACKING - ON");
                         StartHighLightMap();
+                        final ViewPager pager = (ViewPager) getActivity().findViewById(R.id.container);
+                        final TabLayout tabLayout = (TabLayout) getActivity().findViewById(R.id.tabs);
+                        tabLayout.setupWithViewPager(pager);
+                        tabLayout.setupWithViewPager(pager);
+                        tabLayout.getTabAt(0).setIcon(R.drawable.home);
+                        tabLayout.getTabAt(1).setIcon(R.drawable.map);
+                        tabLayout.getTabAt(2).setIcon(R.drawable.flag);
+                        tabLayout.getTabAt(3).setIcon(R.drawable.setting);
+//                        pager.setCurrentItem(0);
                     }
                     else {
                         _buttonTrackingText.setText("TRACKING - OFF");
                         StopHighLight();
+                        final ViewPager pager = (ViewPager) getActivity().findViewById(R.id.container);
+                        final TabLayout tabLayout = (TabLayout) getActivity().findViewById(R.id.tabs);
+                        tabLayout.setupWithViewPager(pager);
+                        tabLayout.setupWithViewPager(pager);
+                        tabLayout.getTabAt(0).setIcon(R.drawable.home);
+                        tabLayout.getTabAt(1).setIcon(R.drawable.map);
+                        tabLayout.getTabAt(2).setIcon(R.drawable.flag);
+                        tabLayout.getTabAt(3).setIcon(R.drawable.setting);
+//                        pager.setCurrentItem(0);
                     }
                 }
             });
@@ -192,9 +213,17 @@ public class Tab2Map extends Fragment implements LocationListener{
 
     @Override
     public void onLocationChanged(Location location) {
+        if (Tab1()._travellingMode)
+            Tab1().CheckIdleTime();
+
         if (_isTrack) {
             this.longitude = location.getLongitude();
             this.latitude = location.getLatitude();
+
+            if (this._first_longitude == 0 && this._first_latitude == 0) {
+                this._first_latitude = location.getLongitude();
+                this._first_longitude = location.getLongitude();
+            }
 
             final double finalLongitude = this.longitude;
             final double finalLatitude = this.latitude;
@@ -327,6 +356,12 @@ public class Tab2Map extends Fragment implements LocationListener{
         builder.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                final FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                ft.detach(Tab2());
+                ft.attach(Tab2());
+                ft.commit();
+                Tab2()._chkCreate = false;
+                _freeCamMode = false;
                 dialog.cancel();
             }
         });
@@ -400,5 +435,12 @@ public class Tab2Map extends Fragment implements LocationListener{
         _mMapView.onLowMemory();
     }
 
+    public double GetLatitude() {
+        return this.latitude;
+    }
+
+    public double GetLongitude() {
+        return this.longitude;
+    }
 
 }

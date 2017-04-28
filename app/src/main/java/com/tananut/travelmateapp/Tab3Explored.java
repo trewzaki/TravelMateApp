@@ -205,7 +205,7 @@ public class Tab3Explored extends Fragment {
                 public void onClick(View v) {
                     Intent startNewActivity = new Intent(getActivity(), ExploredPrototypeActivity.class);
                     startActivity(startNewActivity);
-                    getActivity().finish();
+//                    getActivity().finish();
 
                     Log.d("Debug Id refresh :", "" + Tab3()._id);
                     Log.d("Debug getId :", "" + v.getId());

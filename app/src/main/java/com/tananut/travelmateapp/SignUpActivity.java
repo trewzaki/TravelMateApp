@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -60,38 +61,41 @@ public class SignUpActivity extends AppCompatActivity {
                 String lastName        = _lastNameEdit.getText() + "";
 
                 if (!email.equals("") && !password.equals("") && !confirmPassword.equals("") &&  !firstName.equals("") && !lastName.equals("")) {
-                    if (password.equals(confirmPassword)) {
-                        String urlParameters = "email=" + email +
-                                               "&password=" + password +
-                                               "&first_name=" + firstName +
-                                               "&last_name=" + lastName;
-                        String api = "user/register";
-                        try {
-                            JSONObject modelReader = REST_API(api, urlParameters);
-                            boolean success = modelReader.getBoolean("success");
-                            if (success) {
-                                String user_id    = modelReader.getInt("id") + "";
-                                String first_name = modelReader.getString("first_name") + "";
+                    if (isValidEmail(email)) {
+                        if (password.equals(confirmPassword)) {
+                            String urlParameters = "email=" + email +
+                                    "&password=" + password +
+                                    "&first_name=" + firstName +
+                                    "&last_name=" + lastName;
+                            String api = "user/register";
+                            try {
+                                JSONObject modelReader = REST_API(api, urlParameters);
+                                boolean success = modelReader.getBoolean("success");
+                                if (success) {
+                                    String user_id = modelReader.getInt("id") + "";
+                                    String first_name = modelReader.getString("first_name") + "";
 
-                                Intent startNewActivity = new Intent(SignUpActivity.this, MainActivity.class);
-                                startActivity(startNewActivity);
-                                finish();
+                                    Intent startNewActivity = new Intent(SignUpActivity.this, MainActivity.class);
+                                    startActivity(startNewActivity);
+                                    finish();
 
-                                mPrefs = getSharedPreferences("label", 0);
-                                SharedPreferences.Editor mEditor = mPrefs.edit();
-                                mEditor.putString("LoginState", "1").commit();
-                                mEditor.putString("id", user_id).commit();
-                                mEditor.putString("first_name", first_name).commit();
-                            } else {
-                                Toast.makeText(SignUpActivity.this, "Something Wrong!", Toast.LENGTH_SHORT).show();
+                                    mPrefs = getSharedPreferences("label", 0);
+                                    SharedPreferences.Editor mEditor = mPrefs.edit();
+                                    mEditor.putString("LoginState", "1").commit();
+                                    mEditor.putString("id", user_id).commit();
+                                    mEditor.putString("first_name", first_name).commit();
+                                } else {
+                                    Toast.makeText(SignUpActivity.this, "Something Wrong!", Toast.LENGTH_SHORT).show();
+                                }
+                            } catch (JSONException e) {
+                                Toast.makeText(SignUpActivity.this, "No Internet Connection", Toast.LENGTH_SHORT).show();
+                                e.printStackTrace();
                             }
-                        } catch (JSONException e) {
-                            Toast.makeText(SignUpActivity.this, "No Internet Connection", Toast.LENGTH_SHORT).show();
-                            e.printStackTrace();
+                        } else {
+                            Toast.makeText(SignUpActivity.this, "Password not same with confirm password.", Toast.LENGTH_SHORT).show();
                         }
-                    }
-                    else {
-                        Toast.makeText(SignUpActivity.this, "Password not same with confirm password.", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(SignUpActivity.this, "Invalid email.", Toast.LENGTH_SHORT).show();
                     }
                 }
                 else {
@@ -99,5 +103,9 @@ public class SignUpActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    public final static boolean isValidEmail(CharSequence target) {
+        return !TextUtils.isEmpty(target) && android.util.Patterns.EMAIL_ADDRESS.matcher(target).matches();
     }
 }
